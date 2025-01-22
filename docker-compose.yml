@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  tailwind-app:
+    build: .
+    image: tfo_cv_frontend_image
+    container_name: cv_frontend
+    ports:
+      - "1587:1587"
+    environment:
+      - PORT=1587
+    command: npm run dev
+    volumes:
+      - /var/www/dockerapps/ikportal.tfo.k12.tr/cv_front:/dockerapps/ikportal.tfo.k12.tr/cv_front
+      - node_modules:/dockerapps/ikportal.tfo.k12.tr/cv_front/node_modules
+      - ../cv_files/candidate_photos:/cv_front/candidate_photos
+    networks:
+      - cv-network
+
+volumes:
+  node_modules:
+    driver: local  # node_modules için yerel bir volume oluşturuluyor
+
+networks:
+  cv-network:
+    external: true
